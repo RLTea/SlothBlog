@@ -4,12 +4,12 @@ on:
   push:
     branches: [ main ]
 
-jobs: 
+jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout this branch 
+      - name: Checkout this branch
         uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -22,16 +22,16 @@ jobs:
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
-      
+
       - name: Pull io-repo's static branch
         uses: actions/checkout@v4
         with:
-          repository: github_name/github_name.github.io
+          repository: ${{ secrets.USERNAME }}/${{ secrets.USERNAME }}.github.io
           ref: static
           path: static
-          token: ${{ secrets.BLOG_ACCESS_TOKEN }}
+          token: ${{ secrets.BLOG_TOKEN }}
 
-      - name: Processing blog files 
+      - name: Processing blog files
         run: |
           chmod +x ./blog-processor/processor
           cp -rf ./config/config.yaml ./blog-processor/
@@ -46,8 +46,8 @@ jobs:
           cp -rf ./layouts/* ./hugo-blog-builder/layouts/
           cd hugo-blog-builder
           bash ./run.sh
-      
-      
+
+
       - name: Check for changes of static branch
         working-directory: ./static
         id: check_static_changes
@@ -65,8 +65,8 @@ jobs:
         working-directory: ./static
         if: steps.check_static_changes.outputs.changes == 'true'
         run: |
-          git -c user.name='github actions by ${{ github.actor }}' -c user.email='NO' commit -m 'update' 
-          git push "https://${{ secrets.BLOG_ACCESS_TOKEN }}@github.com/github_name/github_name.github.io.git" HEAD:static -f -q
+          git -c user.name='github actions by ${{ github.actor }}' -c user.email='NO' commit -m 'update'
+          git push "https://${{ secrets.BLOG_TOKEN }}@github.com/${{ secrets.USERNAME }}/${{ secrets.USERNAME }}.github.io.git" HEAD:static -f -q
 
       - name: Commit and Push to main branch
         working-directory: ./hugo-blog-builder/public
@@ -75,5 +75,5 @@ jobs:
           git init
           git checkout -b master
           git add -A
-          git -c user.name='github actions by ${{ github.actor }}' -c user.email='NO' commit -m 'update' 
-          git push "https://${{ secrets.BLOG_ACCESS_TOKEN }}@github.com/github_name/github_name.github.io.git" HEAD:main -f -q
+          git -c user.name='github actions by ${{ github.actor }}' -c user.email='NO' commit -m 'update'
+          git push "https://${{ secrets.BLOG_TOKEN }}@github.com/${{ secrets.USERNAME }}/${{ secrets.USERNAME }}.github.io.git" HEAD:main -f -q

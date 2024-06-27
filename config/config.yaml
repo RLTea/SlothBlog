@@ -3,7 +3,7 @@ Basic:
   ImageDir: "../content/assert"
   TemplateFile: "/"
   OutputDir: "../static"
-  HttpBasePath: "https://raw.githubusercontent.com/github_user/github_user.github.io/static/"
+  HttpBasePath: "https://raw.githubusercontent.com/rltea/rltea.github.io/static/"
   DateLayout: "2006-01-02"
   CommonHeaderFileName: ".header"
   CommonHeaderFileExt: ".toml"
@@ -36,7 +36,3 @@ ArchivesPageConfig:
 
 GlobalHeaderConfig:
   Author: "Github User"
-
-
-
-
