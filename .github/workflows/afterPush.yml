@@ -41,9 +41,15 @@ jobs:
 
       - name: Build static files
         run: |
-          cp -rf ./config/hugo.yaml ./hugo-blog-builder/
-          cp -rf ./themes/* ./hugo-blog-builder/themes/
-          cp -rf ./layouts/* ./hugo-blog-builder/layouts/
+          if [ -e "./config/hugo.yaml" ]; then
+            cp -rf ./config/hugo.yaml ./hugo-blog-builder/
+          fi
+          if [ -e "./themes" ]; then
+            cp -rf ./themes/* ./hugo-blog-builder/themes/
+          fi
+          if [ -e "./layouts" ]; then
+            cp -rf ./layouts/* ./hugo-blog-builder/layouts/
+          fi
           cd hugo-blog-builder
           bash ./run.sh
 
