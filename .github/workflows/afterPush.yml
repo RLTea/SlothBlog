@@ -71,6 +71,7 @@ jobs:
         working-directory: ./static
         if: steps.check_static_changes.outputs.changes == 'true'
         run: |
+          echo "https://${{ secrets.USERNAME }}/${{ secrets.USERNAME }}.github.io.git"
           git -c user.name='github actions by ${{ github.actor }}' -c user.email='NO' commit -m 'update'
           git push "https://${{ secrets.BLOG_TOKEN }}@github.com/${{ secrets.USERNAME }}/${{ secrets.USERNAME }}.github.io.git" HEAD:static -f -q
 
