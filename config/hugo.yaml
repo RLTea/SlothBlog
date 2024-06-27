@@ -1,6 +1,6 @@
 baseURL: https://rltea.github.io/
 languageCode: en-us
-title: Sloth Blog
+title: My Sloth Blog
 theme: ["PaperMod"]
 
 enableRobotsTXT: true
